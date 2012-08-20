@@ -8,10 +8,17 @@ class Lounge(models.Model):
     members = models.ManyToManyField(User, related_name = 'lounges_belongs_to')
 
 class Topic(models.Model):
+    ACCESS_RIGHTS_CHOICES = (
+        ('P', 'Public'),
+        ('M', 'Member only'),
+        ('E', 'Editor only'),
+        ('C', 'Custom'),
+    )
     posted_by = models.ForeignKey(User)
     date_time = models.DateTimeField(auto_now = True)
     lounge_belongs_to = models.ForeignKey('Lounge')
     tags = models.ManyToManyField('Tag', related_name = 'topics')
+    access_rights = models.CharField(max_length = 1, choices = ACCESS_RIGHTS_CHOICES)
     title = models.CharField(max_length = 256)
     content = models.TextField()
 
