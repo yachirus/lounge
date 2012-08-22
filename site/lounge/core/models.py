@@ -23,6 +23,7 @@ class Topic(models.Model):
     content = models.TextField()
 
 class Comment(models.Model):
+    writer = models.ForeignKey(User)
     content = models.TextField()
 
 class Tag(models.Model):
