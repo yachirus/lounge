@@ -8,6 +8,23 @@
         <title>{% block title %}{% endblock %}</title>
     </head>
     <body>
-        {% block content %}{% endblock %}
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                <a class="brand" href="#">Lounge</a>
+                <ul class="nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                </ul>
+                </div>
+            </div>
+        </div>
+        {% block header %}
+            <header style="padding-top: 40px;">
+                <div class="container"><h1>header</h1></div>
+            </header>
+        {% endblock %}
+        {% block content %}<div class="container">content</div>{% endblock %}
     </body>
 </html>
