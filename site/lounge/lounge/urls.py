@@ -9,6 +9,8 @@ urlpatterns = patterns('',
     # url(r'^$', 'lounge.views.home', name='home'),
     # url(r'^lounge/', include('lounge.foo.urls')),
     url(r'^$', 'core.views.home', name='home'),
+    url(r'^login$', 'core.views.login', name='login'),
+    url(r'^logout$', 'core.views.logout', name='logout'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
