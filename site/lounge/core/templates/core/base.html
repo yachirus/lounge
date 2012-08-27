@@ -5,11 +5,44 @@
         <link rel="stylesheet" href="{{ STATIC_URL }}core/css/bootstrap.css">
         <link rel="stylesheet" href="{{ STATIC_URL }}core/css/bootstrap-responsive.css">
         <script type="text/javascript" src="{{ STATIC_URL }}core/js/jquery-1.8.0.min.js"></script>
-        <title>{% block title %}{% endblock %}</title>
+        <script type="text/javascript">
+            {% block script %}{% endblock %}
+        </script>
+        <title>{% block title %}Base{% endblock %}</title>
     </head>
     <body>
-        <div class="container">
-            {% block content %}{% endblock %}
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="/">Lounge</a>
+                    {% block topmenu %}
+                        {% if user.is_authenticated %}
+                        <ul class="nav">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><a href="#">Link</a></li>
+                            <li><a href="#">Link</a></li>
+                        </ul>
+                        {% endif %}
+                        <form class="navbar-form pull-right" action="{% if not user.is_authenticated %}/login{%else%}/logout{%endif%}" method="POST">
+                            {% csrf_token %}
+                            <input name="from" type="hidden" value="{{request.get_full_path}}">
+                            {% if not user.is_authenticated %}
+                                <input name="username" type="text" class="span2" placeholder="User name">
+                                <input name="password" type="password" class="span2" placeholder="Password">
+                            {% endif %}
+                            <button type="submit" class="btn">
+                                {% if not user.is_authenticated %}Login{%else%}Logout{%endif%}
+                            </button>
+                        </form>
+                    {% endblock %}
+                </div>
+            </div>
         </div>
+        {% block header %}
+            <header style="padding-top: 40px;">
+                <div class="container"><h1>header</h1></div>
+            </header>
+        {% endblock %}
+        {% block content %}<div class="container">content</div>{% endblock %}
     </body>
 </html>
