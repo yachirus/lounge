@@ -28,3 +28,11 @@ class Comment(models.Model):
 
 class Tag(models.Model):
     tag_name = models.CharField(max_length = 256)
+
+class UserProfile(models.Model):
+    def upload_to(instance, filename):
+        return filename
+    
+    user = models.ForeignKey(User, unique=True)
+    photo = models.ImageField(upload_to = upload_to, blank=True)
+    settings = models.TextField(blank=True)
