@@ -1,3 +1,4 @@
+import os.path
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -17,7 +18,7 @@ class Topic(models.Model):
     posted_by = models.ForeignKey(User)
     date_time = models.DateTimeField(auto_now = True)
     lounge_belongs_to = models.ForeignKey('Lounge')
-    tags = models.ManyToManyField('Tag', related_name = 'topics')
+    tags = models.ManyToManyField('Tag', related_name = 'topics', blank=True)
     access_rights = models.CharField(max_length = 1, choices = ACCESS_RIGHTS_CHOICES)
     title = models.CharField(max_length = 256)
     content = models.TextField()
@@ -31,7 +32,7 @@ class Tag(models.Model):
 
 class UserProfile(models.Model):
     def upload_to(instance, filename):
-        return filename
+        return os.path.join('UserProfile', instance.user.username, filename)
     
     user = models.ForeignKey(User, unique=True)
     photo = models.ImageField(upload_to = upload_to, blank=True)
