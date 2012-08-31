@@ -1,0 +1,15 @@
+{% extends "core/base.html" %}
+
+{% block header %}
+    <header style="padding-top: 40px;">
+        <div class="container">
+            <h1>{{ topic.title }}</h1>
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {{topic.content}}
+    </div>
+{% endblock %}
