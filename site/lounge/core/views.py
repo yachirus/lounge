@@ -3,7 +3,7 @@ from django.contrib import auth
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
 
-from core.models import Topic
+from core.models import Topic, Comment
 
 # Create your views here.
 def home(request):
@@ -51,4 +51,5 @@ def lounge(request):
 
 def topic(request, lounge_name, topic_id):
     topic = Topic.objects.get(id=topic_id)
-    return render(request, 'core/topic.html', { 'topic': topic })
+    comments = Comment.objects.filter(topic = topic)
+    return render(request, 'core/topic.html', { 'topic': topic, 'comments': comments })

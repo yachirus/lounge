@@ -8,24 +8,27 @@ class Lounge(models.Model):
     editors = models.ManyToManyField(User, related_name = 'lounges_belongs_to_as_editor')
     members = models.ManyToManyField(User, related_name = 'lounges_belongs_to')
 
-class Topic(models.Model):
+class CommentBase(models.Model):
+    posted_by = models.ForeignKey(User)
+    date_time = models.DateTimeField(auto_now = True)
+    content = models.TextField()
+    class Meta:
+        abstract = True
+
+class Topic(CommentBase):
     ACCESS_RIGHTS_CHOICES = (
         ('P', 'Public'),
         ('M', 'Member only'),
         ('E', 'Editor only'),
         ('C', 'Custom'),
     )
-    posted_by = models.ForeignKey(User)
-    date_time = models.DateTimeField(auto_now = True)
     lounge_belongs_to = models.ForeignKey('Lounge')
     tags = models.ManyToManyField('Tag', related_name = 'topics', blank=True)
     access_rights = models.CharField(max_length = 1, choices = ACCESS_RIGHTS_CHOICES)
     title = models.CharField(max_length = 256)
-    content = models.TextField()
 
-class Comment(models.Model):
-    writer = models.ForeignKey(User)
-    content = models.TextField()
+class Comment(CommentBase):
+    topic = models.ForeignKey('Topic')
 
 class Tag(models.Model):
     tag_name = models.CharField(max_length = 256)
