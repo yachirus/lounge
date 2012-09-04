@@ -5,6 +5,7 @@
         <link rel="stylesheet" href="{{ STATIC_URL }}core/css/bootstrap.css">
         <link rel="stylesheet" href="{{ STATIC_URL }}core/css/bootstrap-responsive.css">
         <script type="text/javascript" src="{{ STATIC_URL }}core/js/jquery-1.8.0.min.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}core/js/bootstrap.min.js"></script>
         <script type="text/javascript">
             {% block script %}{% endblock %}
         </script>
@@ -17,22 +18,38 @@
                     <a class="brand" href="/">Lounge</a>
                     {% block topmenu %}
                         {% if user.is_authenticated %}
-                        <ul class="nav">
-                            <li class="active"><a href="#">Home</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                        </ul>
+                            <ul class="nav">
+                                <li class="active"><a href="#">Home</a></li>
+                                <li><a href="#">Link</a></li>
+                                <li><a href="#">Link</a></li>
+                            </ul>
                         {% endif %}
-                        <form class="navbar-form pull-right" action="{% if not user.is_authenticated %}/login{%else%}/logout{%endif%}" method="POST">
+                        
+                        {% if user.is_authenticated %}
+                            <ul class="nav pull-right">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        {{ user.username }}<b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a>Settings</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="javascript:loginform.submit()">Logout</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        {% endif %}
+                        <form name="loginform"
+                              class="navbar-form pull-right"
+                              action="{% if user.is_authenticated %}/logout{% else %}/login{% endif %}"
+                              method="POST">
                             {% csrf_token %}
-                            <input name="from" type="hidden" value="{{request.get_full_path}}">
                             {% if not user.is_authenticated %}
+                                <input name="from" type="hidden" value="{{request.get_full_path}}">
                                 <input name="username" type="text" class="span2" placeholder="User name">
                                 <input name="password" type="password" class="span2" placeholder="Password">
+                                <button type="submit" class="btn">Login</button>
                             {% endif %}
-                            <button type="submit" class="btn">
-                                {% if not user.is_authenticated %}Login{%else%}Logout{%endif%}
-                            </button>
                         </form>
                     {% endblock %}
                 </div>

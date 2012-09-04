@@ -36,12 +36,8 @@ def login(request):
             return render(request, 'core/login.html', { 'form': form })
 
 def logout(request):
-    if request.method == 'POST':
-        redirect_to = request.POST.get('from')
-    else:
-        redirect_to = '/'
     auth.logout(request)
-    return HttpResponseRedirect(redirect_to)
+    return HttpResponseRedirect('/')
 
 def lounge_list(request):
     return render(request, 'core/loungelist.html')
