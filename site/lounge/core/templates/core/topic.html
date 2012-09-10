@@ -15,12 +15,12 @@
                 <img src="{{ MEDIA_URL }}{{ topic.posted_by.get_profile.photo }}" class="img-rounded">
                 {{ topic.posted_by.username }} {{ topic.date_time }}
             </div>
-            <div class="span7 offset1">{{ topic.content }}</div>
+            <div class="span8"><div class="arrow_box_left">{{ topic.content }}</div></div>
         </div>
         <div class="row">
             {% for comment in comments %}
-                <div class="span7 offset3">
-                    {{ comment.content }}
+                <div class="span8 offset2">
+                    <div class="arrow_box_right">{{ comment.content }}</div>
                 </div>
                 <div class="span2">
                     <img src="{{ MEDIA_URL }}{{ comment.posted_by.get_profile.photo }}" class="img-rounded">
